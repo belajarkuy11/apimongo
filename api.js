@@ -32,3 +32,50 @@ app.get('/all', (req, res) => {
         res.send(result)
     })
 })
+
+app.get('/byname/:name', (req, res) => {
+  let query = {nama: req.params.name}  
+  db.collection("collection_tutorial").find(query).toArray((err, result) => {
+      if(err) throw err
+      res.send(result)
+  })
+})
+
+app.get('/byalamat/:alamat', (req, res) => {
+    let query = {alamat: req.params.alamat}  
+  db.collection("collection_tutorial").find(query).toArray((err, result) => {
+      if(err) throw err
+      res.send(result)
+  })
+})
+
+// url
+app.put('/update/nama/:namalama/:namabaru', (req, res) => {
+    let query = {nama: req.params.namalama}
+    let newValues = {$set: {nama: req.params.namabaru}}
+    db.collection("collection_tutorial").updateOne(query, newValues, (err, result) => {
+        if(err) throw err
+        let success = {"rc":"document success"}
+        res.send(success)
+    })
+})
+
+// body json
+app.put('/update/nama/:namalama', (req, res) => {
+    let query = {nama: req.params.namalama}
+    let newValues = {$set: {nama: req.body.nama}}
+    db.collection("collection_tutorial").updateOne(query, newValues, (err, result) => {
+        if(err) throw err
+        let success = {"rc":"document success"}
+        res.send(success)
+    })
+})
+
+app.delete('/delete/bynama/:nama', (req, res) => {
+    let query = {nama: req.params.nama}
+    db.collection("collection_tutorial").deleteOne(query, (err, result) => {
+        if(err) throw err
+        let success = {"rc":"delete document success"}
+        res.send(success)
+    })
+})
