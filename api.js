@@ -2,12 +2,18 @@ let mongo = require('mongodb')
 let express = require('express')
 let bodyParser = require('body-parser')
 let app = express()
+let f = require('util').format
+let user = encodeURIComponent('usertest');
+let password = encodeURIComponent('passtest');
+let authMechanism = 'DEFAULT';
+let dbhost = '10.100.1.4'
 
-app.use(bodyParser.json())
+app.use(express.json())
 
-let mongoclient = mongo.MongoClient
+let mongoclient = mongo.MongoClient    
 
-let urlDb = 'mongodb://192.168.78.18:27017'
+let urlDb = f('mongodb://%s:%s@%s:27018/dbtest?authMechanism=%s',
+  user, password, dbhost, authMechanism);
 
 let db
 
