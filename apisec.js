@@ -43,8 +43,8 @@ app.get('/byname/:name', (req, res) => {
     let query = {nama: req.params.name} 
     db.collection("collection_tutorial").find(query).toArray((err, result) => {
         if(err) throw err
-        
-        if(result === null) {
+                
+        if( result.length > 0 ) {
             let rd = JSON.parse( JSON.stringify(result[0]) )
             let signature = rd.signature
             delete rd.signature
